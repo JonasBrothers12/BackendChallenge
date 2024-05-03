@@ -1,1 +1,3 @@
-Backend challenge/ A server of account register and financial transaction using go, for the Distopia Tech LeL
+Backend challenge/ 
+A register of accounts and financial transactions server, 
+for the Distopia Tech LeL
