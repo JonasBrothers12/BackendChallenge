@@ -5,7 +5,7 @@ type  UserAcount struct{
 	Balance   int64
 	FirstName string
 	LastName  string
-	CPF 	  string	
+	TaxID 	  string	
 	CreatedAt string
 	UpdateAt  string
 	DeleteAt  string
@@ -19,3 +19,8 @@ type UserTransaction struct{
 	TransactionAt		    string
 }
 
+type UserAccountRequest struct{
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	TaxID 	  string `json:"taxID"`
+}

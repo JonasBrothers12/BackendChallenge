@@ -1,10 +1,12 @@
 package main
 
 import (
-  "github.com/gin-gonic/gin"
+	"github.com/JonasBrothers12/BackendChallenge/routes"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
   r := gin.Default()
-  r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+  r.POST("/CreateAccount",routes.HandleCreateAccount)
+  r.Run() 
 }
