@@ -18,3 +18,4 @@ type UserTransaction struct{
 	Amount_Transaction		int64
 	TransactionAt		    string
 }
+
