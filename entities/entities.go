@@ -19,8 +19,3 @@ type UserTransaction struct{
 	TransactionAt		    string
 }
 
-type UserAccountRequest struct{
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	TaxID 	  string `json:"taxID"`
-}

@@ -3,19 +3,24 @@ package routes
 import (
 	"net/http"
 	"github.com/JonasBrothers12/BackendChallenge/Validations"
-	"github.com/JonasBrothers12/BackendChallenge/entities"
 	"github.com/gin-gonic/gin"
 )
 
 func HandleCreateAccount(c *gin.Context) {
-	var Body entities.UserAccountRequest
+	var Body validations.UserAccountRequest
 	err := c.ShouldBindJSON(&Body)
 	if err != nil {
-		c.String(http.StatusBadRequest,"bad request")
+		c.String(http.StatusBadRequest,err.Error())
 		return
 	}
-	err1 := validations.ValidateName(Body.FirstName,Body.LastName)
-	if err1 != nil {
+	errname := validations.ValidateName(Body.FirstName,Body.LastName)
+	if errname != nil {
+		c.String(http.StatusBadRequest,errname.Error())
+		return 
+	}
+	errtaxID := validations.ValidateTaxID(Body.TaxID)
+	if errtaxID != nil {
+		c.String(http.StatusBadRequest,errtaxID.Error())
 		return 
 	}
 	c.String(http.StatusOK,"%s\n%s\n%s\n",Body.FirstName,Body.LastName,Body.TaxID)
