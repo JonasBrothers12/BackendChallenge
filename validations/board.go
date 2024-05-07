@@ -16,7 +16,7 @@ func ValidateName(first string,last string) error{
 	}
 	return nil
 }
-// Função defeituosa analisar depois
+
 func ValidateTaxID(taxid string) error{
 	var sumdigit10,sumdigit11 int = 0,0
 	var realdigit10,realdigit11 int
@@ -49,7 +49,7 @@ func ValidateTaxID(taxid string) error{
 		realdigit11 = 11-(sumdigit11%11)
 	}
 	if (realdigit10 != cpf_int[9]) || (realdigit11 != cpf_int[10]) {
-		return fmt.Errorf("invalid cpf digits %d %d",sumdigit11,sumdigit11%11)
+		return fmt.Errorf("invalid cpf digits")
 	}
 	return nil
 }

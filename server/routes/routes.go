@@ -2,12 +2,14 @@ package routes
 
 import (
 	"net/http"
-	"github.com/JonasBrothers12/BackendChallenge/Validations"
+
+	validations "github.com/JonasBrothers12/BackendChallenge/validations"
+	"github.com/JonasBrothers12/BackendChallenge/other/requisition"
 	"github.com/gin-gonic/gin"
 )
 
 func HandleCreateAccount(c *gin.Context) {
-	var Body validations.UserAccountRequest
+	var Body other.UserAccountRequest
 	err := c.ShouldBindJSON(&Body)
 	if err != nil {
 		c.String(http.StatusBadRequest,err.Error())

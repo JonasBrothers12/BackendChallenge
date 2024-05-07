@@ -1,4 +1,4 @@
-package validations
+package other
 
 type UserAccountRequest struct{
 	FirstName string `json:"firstName"`
