@@ -35,12 +35,8 @@ func ValidateTaxID(taxid string) error{
 			sumdigit10 += cpf_int[i]*(10-i)
 		}
 		if 0 < i && i < 10{
-			if i != 9 {
-				sumdigit11 += cpf_int[i]*(11-i)
-			}else if i == 9{
-				sumdigit11 += (11-i)*(11-(sumdigit11%11))
-			}
-		}
+			sumdigit11 += cpf_int[i]*(11-i)			
+	    }
 	}
 	if ((sumdigit10%11 == 0) || (sumdigit10%11 == 1)){
 		realdigit10 = 0
