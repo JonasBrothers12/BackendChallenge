@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	validations "github.com/JonasBrothers12/BackendChallenge/validations"
-	"github.com/JonasBrothers12/BackendChallenge/other/requisition"
+	"github.com/JonasBrothers12/BackendChallenge/presenter/requisition"
 	"github.com/gin-gonic/gin"
 )
 
