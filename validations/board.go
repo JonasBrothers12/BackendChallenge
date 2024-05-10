@@ -3,7 +3,7 @@ package validations
 import (
 	"fmt"
 	"strconv"
-	"strings"
+	//"strings"
 )
 
 
@@ -18,16 +18,19 @@ func ValidateName(first string,last string) error{
 }
 
 func ValidateTaxID(taxid string) error{
+	/*
 	var sumdigit10,sumdigit11 int = 0,0
 	var realdigit10,realdigit11 int
-	var cpf_int[11] int
+	var cpf_int[14] int
+	*/
 	_ ,err := strconv.Atoi(taxid)
-	if len(taxid) != 11 {
+	if len(taxid) != 14 {
 		return fmt.Errorf("invalid cpf number of digits")
 	}
 	if err != nil {
 		return fmt.Errorf("invalid cpf digits")
 	}
+	/*
 	cpf_string := strings.Split(taxid,"")
 	for i := 0; i < 11; i++ {
 		cpf_int[i],_ = strconv.Atoi(cpf_string[i])
@@ -51,6 +54,7 @@ func ValidateTaxID(taxid string) error{
 	if (realdigit10 != cpf_int[9]) || (realdigit11 != cpf_int[10]) {
 		return fmt.Errorf("invalid cpf digits")
 	}
+	*/
 	return nil
 }
 
