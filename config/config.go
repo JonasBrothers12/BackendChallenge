@@ -1,7 +1,5 @@
 package config
 
-
-
 type InternalConfig struct {
 	RunningLocal bool
 	ServerPort   int
@@ -16,29 +14,24 @@ type MySQLConfig struct {
 	Database string
 }
 
-type RedisConfig struct {
-	Host     string
-	Port     string
-	Password string
-	Database int
-}
-
 type Config struct {
 	InternalConfig *InternalConfig
 	MySQLConfig    *MySQLConfig
-	RedisConfig    *RedisConfig
 }
 
-func Get() *Config {
-	
-
+func Getconfigs() *Config {
 	return &Config{
+		InternalConfig: &InternalConfig{
+			RunningLocal: true,
+			ServerPort: 8080,
+			ServiceName: "Distopia",
+		},
 		MySQLConfig: &MySQLConfig{
 			Host:     "localhost",
 			Port:     "3306",
 			Username: "root",
 			Password: "root",
-			Database: "pupper_example",
+			Database: "distopia_example",
 		},
 		
 	}

@@ -1,4 +1,4 @@
-package other
+package requisition
 
 type UserAccountRequest struct{
 	FirstName string `json:"firstName"`

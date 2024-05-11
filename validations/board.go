@@ -24,7 +24,7 @@ func ValidateTaxID(taxid string) error{
 	var cpf_int[14] int
 	*/
 	_ ,err := strconv.Atoi(taxid)
-	if len(taxid) != 14 {
+	if len(taxid) != 11 {
 		return fmt.Errorf("invalid cpf number of digits")
 	}
 	if err != nil {
