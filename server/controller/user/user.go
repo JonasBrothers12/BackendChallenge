@@ -1,9 +1,7 @@
 package user
 
 import (
-	"fmt"
 	"net/http"
-
 	"github.com/JonasBrothers12/BackendChallenge/config"
 	"github.com/JonasBrothers12/BackendChallenge/database/mysql"
 	"github.com/JonasBrothers12/BackendChallenge/presenter/requisition"
@@ -33,7 +31,6 @@ func HandleNewuser(c *gin.Context){
 		c.String(http.StatusBadRequest,err.Error())		
 		return
 	}
-	fmt.Println("ok")
 	err = mysql.InsertNewUser(Db,&Body)
 	if err != nil {
 		c.String(http.StatusBadRequest,err.Error())		
