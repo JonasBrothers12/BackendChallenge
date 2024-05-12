@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HandleNewuser(c *gin.Context){
+func HandleNewUser(c *gin.Context){
 	var Body requisition.UserAccountRequest
 	err := c.ShouldBindJSON(&Body)
 	if err != nil {

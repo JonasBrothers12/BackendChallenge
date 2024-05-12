@@ -6,6 +6,6 @@ import (
 )
 
 func Routes(svr *gin.Engine){
-	svr.POST("/CreateAccount",user.HandleNewuser)
+	svr.POST("/CreateAccount",user.HandleNewUser)
 }
 

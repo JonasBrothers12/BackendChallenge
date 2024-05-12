@@ -2,8 +2,9 @@ package validations
 
 import (
 	"fmt"
+	"regexp"
 	"strconv"
-	//"strings"
+	"strings"
 )
 
 
@@ -18,22 +19,27 @@ func ValidateName(first string,last string) error{
 }
 
 func ValidateTaxID(taxid string) error{
-	/*
 	var sumdigit10,sumdigit11 int = 0,0
 	var realdigit10,realdigit11 int
-	var cpf_int[14] int
-	*/
-	_ ,err := strconv.Atoi(taxid)
-	if len(taxid) != 11 {
-		return fmt.Errorf("invalid cpf number of digits")
+	var cpf_int[11] int
+	re := regexp.MustCompile(`^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$`)
+	if !re.MatchString(taxid) || len(taxid) != 14{
+		return fmt.Errorf("document number invalid, please type 14 characters in the format 000.000.000-00")
 	}
-	if err != nil {
-		return fmt.Errorf("invalid cpf digits")
-	}
-	/*
 	cpf_string := strings.Split(taxid,"")
+	c := 0
+	for a := 0; a < 14; a++{
+		if (a != 3 && a != 7 && a != 11) {
+			b ,err := strconv.Atoi(cpf_string[a])
+			if err != nil {
+				return fmt.Errorf("invalid cpf")
+			}else{
+				cpf_int[c] = b
+				c++
+			}
+		}
+	}
 	for i := 0; i < 11; i++ {
-		cpf_int[i],_ = strconv.Atoi(cpf_string[i])
 		if i < 9{
 			sumdigit10 += cpf_int[i]*(10-i)
 		}
@@ -52,9 +58,8 @@ func ValidateTaxID(taxid string) error{
 		realdigit11 = 11-(sumdigit11%11)
 	}
 	if (realdigit10 != cpf_int[9]) || (realdigit11 != cpf_int[10]) {
-		return fmt.Errorf("invalid cpf digits")
+		return fmt.Errorf("invalid cpf")
 	}
-	*/
 	return nil
 }
 
