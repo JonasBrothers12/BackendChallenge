@@ -6,13 +6,17 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func InsertNewUser(db *sqlx.DB,req *requisition.UserAccountRequest) error{
+type User struct{
+	cli *sqlx.DB
+}
+
+func (u *User) InsertNewUser(req *requisition.UserAccountRequest) error{
 	user := &model.UserAcount{
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
 		TaxID:     req.TaxID,
 	}
-	stmt, err := db.Prepare("INSERT INTO distopia_example.tab_user (first_name, last_name, tax_id) VALUES(?, ?, ?)")
+	stmt, err := u.cli.Prepare("INSERT INTO distopia_example.tab_user (first_name, last_name, tax_id) VALUES(?, ?, ?)")
 	if err != nil {
 		return err
 	}
@@ -21,7 +25,6 @@ func InsertNewUser(db *sqlx.DB,req *requisition.UserAccountRequest) error{
 	if err != nil {
 		panic(err.Error())
 	}
-	NewWalletUser(db,req)
 	return nil
 }
 

@@ -2,8 +2,9 @@ package user
 
 import (
 	"net/http"
+
 	"github.com/JonasBrothers12/BackendChallenge/config"
-	"github.com/JonasBrothers12/BackendChallenge/database/mysql"
+	"github.com/JonasBrothers12/BackendChallenge/database"
 	"github.com/JonasBrothers12/BackendChallenge/presenter/requisition"
 	"github.com/JonasBrothers12/BackendChallenge/validations"
 	"github.com/gin-gonic/gin"
@@ -26,15 +27,10 @@ func HandleNewUser(c *gin.Context){
 		c.String(http.StatusBadRequest,errtaxID.Error())
 		return 
 	}
-	Db ,err := mysql.ConnectDatabase(config.Getconfigs().MySQLConfig)
+	DB,err := database.NewDatabaseAction(config.Getconfigs())
 	if err != nil {
 		c.String(http.StatusBadRequest,err.Error())		
 		return
 	}
-	err = mysql.InsertNewUser(Db,&Body)
-	if err != nil {
-		c.String(http.StatusBadRequest,err.Error())		
-		return
-	}
-	
+	DB.MySQL.User.InsertNewUser(&Body)
 }

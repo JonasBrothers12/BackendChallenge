@@ -7,8 +7,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+type DataBase struct{
+	User *User
+	cli *sqlx.DB
+}
 
-func ConnectDatabase(cfg *config.MySQLConfig) (*sqlx.DB, error){
+func ConnectDatabase(cfg *config.MySQLConfig) (*DataBase, error){
 
 	url := cfg.Username + ":" + cfg.Password + "@tcp(" + cfg.Host + ":" + cfg.Port + ")/" + cfg.Database
 
@@ -23,5 +27,8 @@ func ConnectDatabase(cfg *config.MySQLConfig) (*sqlx.DB, error){
 		return nil,err
 	}
 
-	return cli,nil
+	return &DataBase{
+		User: &User{cli:cli},
+		cli: cli,
+	}, nil
 }
