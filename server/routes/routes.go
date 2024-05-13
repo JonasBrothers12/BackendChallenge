@@ -1,11 +1,11 @@
 package router
 
 import (
-	"github.com/JonasBrothers12/BackendChallenge/server/controller/user"
+	"github.com/JonasBrothers12/BackendChallenge/server/controller"
 	"github.com/gin-gonic/gin"
 )
 
-func Routes(svr *gin.Engine){
-	svr.POST("/CreateAccount",user.HandleNewUser)
+func RegisterRoutes(svr *gin.Engine,ctrl *controller.ControllerManager){
+	svr.POST("/CreateAccount",ctrl.UserController.HandleNewUser)
 }
 

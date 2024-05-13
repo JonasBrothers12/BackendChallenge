@@ -2,15 +2,30 @@ package user
 
 import (
 	"net/http"
-
-	"github.com/JonasBrothers12/BackendChallenge/config"
-	"github.com/JonasBrothers12/BackendChallenge/database"
+	/*
+		"github.com/JonasBrothers12/BackendChallenge/config"
+		"github.com/JonasBrothers12/BackendChallenge/database"
+	*/
 	"github.com/JonasBrothers12/BackendChallenge/presenter/requisition"
+	"github.com/JonasBrothers12/BackendChallenge/service"
+	"github.com/JonasBrothers12/BackendChallenge/util"
 	"github.com/JonasBrothers12/BackendChallenge/validations"
 	"github.com/gin-gonic/gin"
 )
 
-func HandleNewUser(c *gin.Context){
+type ControllerUser struct {
+	resutil *util.Util
+	svc     *service.Service
+}
+
+func NewController(svc *service.Service, resutil *util.Util) *ControllerUser {
+	return &ControllerUser{
+		resutil: resutil,
+		svc:     svc,
+	}
+}
+
+func (ctrl *ControllerUser)HandleNewUser(c *gin.Context){
 	var Body requisition.UserAccountRequest
 	err := c.ShouldBindJSON(&Body)
 	if err != nil {
@@ -27,10 +42,6 @@ func HandleNewUser(c *gin.Context){
 		c.String(http.StatusBadRequest,errtaxID.Error())
 		return 
 	}
-	DB,err := database.NewDatabaseAction(config.Getconfigs())
-	if err != nil {
-		c.String(http.StatusBadRequest,err.Error())		
-		return
-	}
-	DB.MySQL.User.InsertNewUser(&Body)
+	ctrl.svc.User.CreateUserService(&Body)
+
 }
