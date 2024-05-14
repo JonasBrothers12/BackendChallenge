@@ -9,7 +9,8 @@ import (
 
 type DataBase struct{
 	User *User
-	cli *sqlx.DB
+	Cli *sqlx.DB
+	Wallet *Wallet
 }
 
 func ConnectDatabase(cfg *config.MySQLConfig) (*DataBase, error){
@@ -29,6 +30,7 @@ func ConnectDatabase(cfg *config.MySQLConfig) (*DataBase, error){
 
 	return &DataBase{
 		User: &User{cli:cli},
-		cli: cli,
+		Cli: cli,
+		Wallet: &Wallet{cli: cli},
 	}, nil
 }

@@ -9,17 +9,21 @@ type User struct{
 	cli *sqlx.DB
 }
 
-func (u *User) InsertNewUser(user *model.UserAcount) error{
+func (u *User) InsertNewUser(user *model.UserAcount) (int64,error){
 	stmt, err := u.cli.Prepare("INSERT INTO distopia_example.tab_user (first_name, last_name, tax_id) VALUES(?, ?, ?)")
 	if err != nil {
-		return err
+		return 0,err
 	}
 	defer stmt.Close()
-	_, err = stmt.Exec(user.FirstName, user.LastName, user.TaxID)
+	res, err := stmt.Exec(user.FirstName, user.LastName, user.TaxID)
 	if err != nil {
-		panic(err.Error())
+		return 0,err
 	}
-	return nil
+	ValueID,err := res.LastInsertId()
+	if err != nil {
+		return 0,err
+	}
+	return ValueID,nil
 }
 
 
