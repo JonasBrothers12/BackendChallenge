@@ -1,6 +1,8 @@
 package service
 
 import (
+	"database/sql"
+
 	"github.com/JonasBrothers12/BackendChallenge/config"
 	"github.com/JonasBrothers12/BackendChallenge/database"
 	"github.com/JonasBrothers12/BackendChallenge/model"
@@ -21,15 +23,13 @@ func NewWalletService(cfg *config.Config, logger *zerolog.Logger, repo *database
 	}
 }
 
-func (s *WalletService) CreateWalletService(userID int64,alias string,currencyID int64,balance int64) error {
+func (s *WalletService) CreateWalletService(userID int64,alias string,currencyID int64,balance int64,tx *sql.Tx) error {
 	wallet := &model.WalletUser{
 		OwnerID:   		userID,
 		Alias: 	   		alias,
 		CurrencyID: 	currencyID,
 		Balance: 		balance,	
 	}
-
 	s.logger.Info().Msgf("creating Wallet for user %d", userID)
-
-	return s.repo.MySQL.Wallet.InsertNewWallet(wallet)
+	return s.repo.MySQL.Wallet.InsertNewWallet(wallet,tx)
 }

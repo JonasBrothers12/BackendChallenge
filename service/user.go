@@ -31,15 +31,34 @@ func (s *UserService) CreateUserService(r *requisition.UserAccountRequest) error
 		LastName:       r.LastName,
 		TaxID: 			r.TaxID,
 	}
+
+	tx,err := s.repo.MySQL.Cli.Begin()
+
+	if err != nil{
+		return err
+	}
+
+	defer tx.Rollback()
+
 	s.logger.Info().Msgf("creating user %s", user.TaxID)
-	valueId,err := s.repo.MySQL.User.InsertNewUser(user)
+
+	valueId,err := s.repo.MySQL.User.InsertNewUser(user,tx)
+
 	if err != nil{
-		return nil
+		return err
 	}
+
 	Alias := r.FirstName + " wallet"
-	err = s.Wallet.CreateWalletService(valueId,Alias,constants.BRL,0)
+
+	err = s.Wallet.CreateWalletService(valueId,Alias,constants.BRL,0,tx)
+
 	if err != nil{
-		return nil
+		return err
 	}
+
+	if err = tx.Commit(); err != nil {
+        return err
+    }
+
 	return nil
 }
