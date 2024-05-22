@@ -1,7 +1,6 @@
 package service
 
 import (
-	constants "github.com/JonasBrothers12/BackendChallenge/Constants"
 	"github.com/JonasBrothers12/BackendChallenge/config"
 	"github.com/JonasBrothers12/BackendChallenge/database"
 	"github.com/JonasBrothers12/BackendChallenge/model"
@@ -48,9 +47,17 @@ func (s *UserService) CreateUserService(r *requisition.UserAccountRequest) error
 		return err
 	}
 
-	Alias := r.FirstName + " wallet"
+	currency, _, err := s.repo.MySQL.Currency.SelectByCurrencyCode(tx, model.CurrencyBRL)
+	if err != nil {
+		return err
+	}
+	wallet := &model.WalletUser{
+		OwnerID: valueId,
+		CurrencyID: currency.ID,
+		Alias: r.FirstName + " wallet",
+	}
 
-	err = s.Wallet.CreateWalletService(valueId,Alias,constants.BRL,0,tx)
+	err = s.Wallet.CreateWalletService(wallet,tx)
 
 	if err != nil{
 		return err
@@ -62,3 +69,4 @@ func (s *UserService) CreateUserService(r *requisition.UserAccountRequest) error
 
 	return nil
 }
+

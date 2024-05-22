@@ -11,6 +11,7 @@ type DataBase struct{
 	User *User
 	Cli *sqlx.DB
 	Wallet *Wallet
+	Currency *Currency
 }
 
 func ConnectDatabase(cfg *config.MySQLConfig) (*DataBase, error){
@@ -32,5 +33,6 @@ func ConnectDatabase(cfg *config.MySQLConfig) (*DataBase, error){
 		User: &User{cli:cli},
 		Cli: cli,
 		Wallet: &Wallet{cli: cli},
+		Currency: &Currency{cli:cli},
 	}, nil
 }

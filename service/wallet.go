@@ -23,13 +23,8 @@ func NewWalletService(cfg *config.Config, logger *zerolog.Logger, repo *database
 	}
 }
 
-func (s *WalletService) CreateWalletService(userID int64,alias string,currencyID int64,balance int64,tx *sql.Tx) error {
-	wallet := &model.WalletUser{
-		OwnerID:   		userID,
-		Alias: 	   		alias,
-		CurrencyID: 	currencyID,
-		Balance: 		balance,	
-	}
-	s.logger.Info().Msgf("creating Wallet for user %d", userID)
+func (s *WalletService) CreateWalletService(wallet *model.WalletUser,tx *sql.Tx) error {
+	
+	s.logger.Info().Msgf("creating Wallet for user %d", wallet.OwnerID)
 	return s.repo.MySQL.Wallet.InsertNewWallet(wallet,tx)
 }
